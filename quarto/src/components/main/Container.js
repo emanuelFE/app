@@ -6,6 +6,13 @@ export default function Container(){
 
     // vamos o estado Inicial dos produtos , ou seja
     // quais dados existem dentro do objeto produtos
+    const [mensagem, setmensagem] = useState([
+        {
+            titulo: "",
+            autor: "",
+            mensagem: ""
+        }
+    ])
     const [produtos,setProduto] = useState([
         {
             id: "",
@@ -24,14 +31,21 @@ export default function Container(){
         .then((dados)=>{
             setProduto(dados.output);
         })
-        .catch((err)=>console.error(`error ao carregar a api ->${erro}`))
+        .catch((erro)=>console.error(`error ao carregar a api ->${erro}`))
 
-    },[])
+    },[]);
+
+
+    const mudarDados = (content) => {
+        setmensagem(content);
+    };
+
+
 
     return(
         <div className="container">
-            <Mensagem />
-            <Conteudo dados = {produtos}/>
+            <Mensagem info={mensagem} />
+            <Conteudo dados={produtos} acao={mudarDados}/>
         </div>
     )
 }
